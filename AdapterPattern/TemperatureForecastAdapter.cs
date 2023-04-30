@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace AdapterPattern
 {
@@ -7,29 +6,23 @@ namespace AdapterPattern
     {
         private WeatherProvider _weatherProvider = new WeatherProvider();
 
-        public class Daily
-        {
-            //public List<string> time { get; set; }
-            public List<double> temperature_2m_max { get; set; }
-            public List<double> temperature_2m_min { get; set; }
-
-        }
+        private Daily _daily { get; set; }
 
 
         public List<double> GetTemperatureForecastInfo()
         {
-            string json = _weatherProvider.Response;
+            string jsonpath = "$.daily";
 
-            var a = JsonConvert.DeserializeObject<Daily>(json);
+            JObject jobject = JObject.Parse(_weatherProvider.Response);
+            JToken jToken = jobject.SelectToken(jsonpath);
+            Daily daily = jToken.ToObject<Daily>();
 
             List<double> result = new List<double>();
-            result.Add(a.temperature_2m_min[0]);
-            result.Add(a.temperature_2m_max[0]);
+
+            result.Add(daily.Temperature2mMin[0]);
+            result.Add(daily.Temperature2mMax[0]);
 
             return result;
         }
-
-
-
     }
 }

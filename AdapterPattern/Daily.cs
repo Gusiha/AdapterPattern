@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace AdapterPattern
 {
+
     public class Daily
     {
-        public List<double> temperature_2m_max { get; set; }
-        public List<double> temperature_2m_min { get; set; }
+        [JsonProperty("time")]
+        public List<string> Time { get; set; }
+
+        [JsonProperty("temperature_2m_max")]
+        public List<double> Temperature2mMax { get; set; }
+
+        [JsonProperty("temperature_2m_min")]
+        public List<double> Temperature2mMin { get; set; }
     }
 }
