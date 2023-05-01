@@ -4,15 +4,11 @@ namespace AdapterPattern
 {
     internal class TemperatureForecastAdapter : ITarget
     {
-        private WeatherProvider _weatherProvider = new WeatherProvider();
-
-        private Daily _daily { get; set; }
-
+        private WeatherProvider _weatherProvider;
 
         public List<double> GetTemperatureForecastInfo()
         {
             string jsonpath = "$.daily";
-
             JObject jobject = JObject.Parse(_weatherProvider.Response);
             JToken jToken = jobject.SelectToken(jsonpath);
             Daily daily = jToken.ToObject<Daily>();
@@ -24,5 +20,11 @@ namespace AdapterPattern
 
             return result;
         }
+
+        public TemperatureForecastAdapter(string cityName, int countryNumber)
+        {
+            _weatherProvider = new(cityName, countryNumber);
+        }
+
     }
 }
