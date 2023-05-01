@@ -9,7 +9,9 @@ namespace AdapterPattern
         public string CityName { get; set; }
         public int CountryNumber { get; set; }
 
-        private const string _apiKey = "aa2a6869a56d0314cf5e726e33bbb57e";
+        private readonly IConfiguration _config;
+
+        private readonly string _apiKey;
 
 
 
@@ -48,10 +50,12 @@ namespace AdapterPattern
             } 
         }
 
-        public WeatherProvider(string cityName, int countryNumber)
+        public WeatherProvider(string cityName, int countryNumber, IConfiguration config)
         {
             CityName = cityName;
             CountryNumber = countryNumber;
+            _config = config;
+            _apiKey = _config["GeoCodingApiKey"];
             Response = GetWeatherAsync().Result;
         }
     }

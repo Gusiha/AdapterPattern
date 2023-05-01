@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
 namespace AdapterPattern
 {
@@ -21,9 +22,9 @@ namespace AdapterPattern
             return result;
         }
 
-        public TemperatureForecastAdapter(string cityName, int countryNumber)
+        public TemperatureForecastAdapter(string cityName, int countryNumber, IConfiguration configuration)
         {
-            _weatherProvider = new(cityName, countryNumber);
+            _weatherProvider = new(cityName, countryNumber, configuration);
         }
 
     }
